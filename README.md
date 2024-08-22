@@ -4,10 +4,15 @@
 
 ### Install AMBF 3.0
 
+Install ambf dependencies (Not sure if they are needed in Ubuntu 22.04)
+```
+sudo apt install libasound2-dev libgl1-mesa-dev xorg-dev
+```
 Clone and compile AMBF 3.0 without ROS support
 
 ```
 git clone git@github.com:LauraConnolly/ambf.git
+git checkout ros2-support
 cd ambf/core/
 mkdir build && cd build
 cmake ..
