@@ -1,0 +1,7 @@
+plugins: [
+  {
+    name: DRILLING_SIMULATOR,
+    filename: libvolumetric_drilling.so,
+    path: build/
+  }
+]
