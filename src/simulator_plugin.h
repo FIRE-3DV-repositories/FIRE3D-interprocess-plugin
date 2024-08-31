@@ -70,6 +70,7 @@ private:
     std::unordered_map<std::string, std::shared_ptr<ShmemString>> _names;
     afWorldPtr _world;
     glm::mat4 _changeBasis{0.0f};
+    glm::mat4 _rotate90{1.0f};
 };
 
 

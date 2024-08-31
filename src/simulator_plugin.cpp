@@ -1,5 +1,6 @@
 #include "simulator_plugin.h"
-#include <glm/gtx/quaternion.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <boost/program_options.hpp>
 
 
@@ -44,52 +45,40 @@ int afVulkanInterprocessPlugin::init(int argc, char **argv, const afWorldPtr a_a
         std:: cout << " --> " << name << std::endl;
         _names.emplace(kv.first, std::make_shared<ShmemString>(name.c_str(), _segment->get_allocator<ShmemString>()));
     }
+    _names.emplace("CameraBasis", std::make_shared<ShmemString>("CameraBasis", _segment->get_allocator<ShmemString>()));
 
     _changeBasis[0][0] = 1.0f;
     _changeBasis[1][2] = 1.0f;
     _changeBasis[2][1] = -1.0f;
     _changeBasis[3][3] = 1.0f;
 
+    Transform cameraBasisTransform;
+    glm::mat4 cameraBasis = _changeBasis;
+    cameraBasis[1][2] *= -1.0f;
+    cameraBasis[2][1] *= -1.0f;
+    memcpy(cameraBasisTransform.array, glm::value_ptr(cameraBasis), sizeof(cameraBasis));
+    _interprocess->_map->at(*_names["CameraBasis"]) = cameraBasisTransform;
+
     return 1;
 }
 
 void afVulkanInterprocessPlugin::graphicsUpdate(){
-    // _transform = _interprocess->_map->at(*_name);
-    // glm::mat4 trans = glm::make_mat4(_transform.array);
-    // trans = glm::rotate(trans, glm::radians(0.1f), glm::vec3(0.0, 1.0, 0.0));
-    // memcpy(_transform.array, glm::value_ptr(trans), sizeof(trans));
-    // _interprocess->_map->at(*_name) = _transform;
-
     afBaseObjectMap *obj_map = _world->getRigidBodyMap();
     afBaseObjectMap::const_iterator it = obj_map->begin();
     for (pair<std::string, afBaseObjectPtr> kv : *obj_map) {
         if (_interprocess->_map->find(*_names[kv.first]) == _interprocess->_map->end()) {
             continue;    
         }
-        // _rigid_bodies_map[kv.first] = dynamic_cast<afRigidBody *>(obj_map->at(kv.first));
         Transform transform; 
-        float floatTrans[16];
-        int index = 0;
+        glm::mat4 trans{1.0f};
         for (size_t i = 0; i < 4; i++) {
             for (size_t j = 0; j < 4; j++) {
-                // if (j == 1) {
-                //     floatTrans[i][j] = static_cast<float>(kv.second->getGlobalTransform().m[i][2]);
-
-                // } else if (j == 2) {
-                //     floatTrans[i][j] = static_cast<float>(kv.second->getGlobalTransform().m[i][1]);
-
-                // } else {
-                    floatTrans[index] = static_cast<float>(kv.second->getGlobalTransform().m[i][j]);
-                    index++;
-
-                // }
+                trans[i][j] = static_cast<float>(kv.second->getGlobalTransform().m[i][j]);
             }
         }
-        glm::mat4 mat = glm::make_mat4(floatTrans);
-        mat *= _changeBasis;
+        trans *= _changeBasis;
 
-
-        memcpy(transform.array, glm::value_ptr(mat), sizeof(mat));
+        memcpy(transform.array, glm::value_ptr(trans), sizeof(trans));
         _interprocess->_map->at(*_names[kv.first]) = transform;
     }
 }
