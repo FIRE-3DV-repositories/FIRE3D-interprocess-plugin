@@ -74,4 +74,4 @@ private:
 };
 
 
-AF_REGISTER_SIMULATOR_PLUGIN(afVulkanInterprocessPlugin)
+AF_REGISTER_SIMULATOR_PLUGIN(afFIRE3DInterprocessPlugin)
