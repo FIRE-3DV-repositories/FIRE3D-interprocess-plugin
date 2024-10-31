@@ -1,4 +1,4 @@
-# Vulkan Interprocess Plugin with AMBF 3.0
+# FIRE3D Interprocess Plugin for AMBF 3.0
 
 ## Setup
 
@@ -28,7 +28,7 @@ cd ambf/core/bin/lin-x86_64/
 ### compile simple plugin
 
 ```
-cd vulkan-interprocess-plugin
+cd FIRE3D-interprocess-plugin
 mkdir build && cd build
 cmake ..
 make -j8
@@ -36,5 +36,5 @@ make -j8
 
 Run ambf with plugin with
 ```
-../ambf/core/bin/lin-x86_64/ambf_simulator --plugins build/libvulkan_interprocess.so
+../ambf/core/bin/lin-x86_64/ambf_simulator --plugins build/libFIRE3D_interprocess.so
 ```
