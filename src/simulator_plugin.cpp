@@ -13,12 +13,12 @@
 namespace p_opt = boost::program_options;
 
 
-afVulkanInterprocessPlugin::afVulkanInterprocessPlugin()
+afFIRE3DInterprocessPlugin::afVulkanInterprocessPlugin()
 {
 
 }
 
-int afVulkanInterprocessPlugin::init(int argc, char **argv, const afWorldPtr a_afWorld)
+int afFIRE3DInterprocessPlugin::init(int argc, char **argv, const afWorldPtr a_afWorld)
 {
     std::cout << "Test simulation plugin" << std::endl;
 
@@ -62,7 +62,7 @@ int afVulkanInterprocessPlugin::init(int argc, char **argv, const afWorldPtr a_a
     return 1;
 }
 
-void afVulkanInterprocessPlugin::graphicsUpdate(){
+void afFIRE3DInterprocessPlugin::graphicsUpdate(){
     afBaseObjectMap *obj_map = _world->getRigidBodyMap();
     afBaseObjectMap::const_iterator it = obj_map->begin();
     for (pair<std::string, afBaseObjectPtr> kv : *obj_map) {
@@ -83,39 +83,39 @@ void afVulkanInterprocessPlugin::graphicsUpdate(){
     }
 }
 
-void afVulkanInterprocessPlugin::physicsUpdate(double dt)
+void afFIRE3DInterprocessPlugin::physicsUpdate(double dt)
 {
 
 }
 
 
 
-afCameraPtr afVulkanInterprocessPlugin::findAndAppendCamera(string cam_name)
+afCameraPtr afFIRE3DInterprocessPlugin::findAndAppendCamera(string cam_name)
 {
 
 }
 
 
 
-void afVulkanInterprocessPlugin::keyboardUpdate(GLFWwindow *a_window, int a_key, int a_scancode, int a_action, int a_mods) {
+void afFIRE3DInterprocessPlugin::keyboardUpdate(GLFWwindow *a_window, int a_key, int a_scancode, int a_action, int a_mods) {
 
 }
 
 
-void afVulkanInterprocessPlugin::mouseBtnsUpdate(GLFWwindow *a_window, int a_button, int a_action, int a_modes){
+void afFIRE3DInterprocessPlugin::mouseBtnsUpdate(GLFWwindow *a_window, int a_button, int a_action, int a_modes){
 
 }
 
-void afVulkanInterprocessPlugin::mouseScrollUpdate(GLFWwindow *a_window, double x_pos, double y_pos){
+void afFIRE3DInterprocessPlugin::mouseScrollUpdate(GLFWwindow *a_window, double x_pos, double y_pos){
 
 }
 
-void afVulkanInterprocessPlugin::reset()
+void afFIRE3DInterprocessPlugin::reset()
 {
 
 }
 
-bool afVulkanInterprocessPlugin::close()
+bool afFIRE3DInterprocessPlugin::close()
 {
     return true;
 }
