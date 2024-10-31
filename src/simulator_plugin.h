@@ -41,7 +41,7 @@ using namespace ambf;
 
 class afVulkanInterprocessPlugin : public afSimulatorPlugin{
 public:
-    afVulkanInterprocessPlugin();
+    afFIRE3DInterprocessPlugin();
     virtual int init(int argc, char** argv, const afWorldPtr a_afWorld) override;
     virtual void keyboardUpdate(GLFWwindow* a_window, int a_key, int a_scancode, int a_action, int a_mods) override;
     virtual void mouseBtnsUpdate(GLFWwindow* a_window, int a_button, int a_action, int a_modes) override;
